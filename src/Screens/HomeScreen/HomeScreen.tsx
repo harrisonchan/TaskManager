@@ -6,7 +6,7 @@ import { appActions } from '../../redux/features'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { utilityFunctions } from '../../utilities'
 
-const Home = () => {
+const HomeScreen = () => {
   const currentDate = dayjs().format('DD MMMM')
   const count = useAppSelector((state) => state.counter.counterValue)
   const tasks = useAppSelector((state) => state.task.tasks)
@@ -75,4 +75,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default HomeScreen

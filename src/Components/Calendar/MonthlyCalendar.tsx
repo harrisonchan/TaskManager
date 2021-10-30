@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import localeData from 'dayjs/plugin/localeData'
 import React, { ReactNode, useEffect, useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
-import { onChange } from 'react-native-reanimated'
+import { ColorPalette } from '../../Assets'
 dayjs.extend(localeData)
 
 interface MonthlyDateSliderProps {
@@ -11,7 +11,6 @@ interface MonthlyDateSliderProps {
   onPressNext?: () => void
   onPressDate?: () => void
   isSelectingMonth?: boolean
-  // onChangeMonth?: (selectedMonth: dayjs.Dayjs) => void
 }
 
 const MonthlyDateSlider: React.FC<MonthlyDateSliderProps> = (props) => {
@@ -40,20 +39,30 @@ interface MonthlyCalendarItemProps {
   itemHeight: number
   itemValue?: dayjs.Dayjs
   testProp?: boolean
+  selectable?: boolean
 }
 
 const MonthlyCalendarItem: React.FC<MonthlyCalendarItemProps> = (props) => {
+  const [isSelected, setIsSelected] = useState(false)
   return (
-    <View
+    <TouchableOpacity
       style={{
         height: props.itemHeight,
         width: props.itemWidth,
         justifyContent: 'center',
         alignItems: 'center',
-      }}>
-      {props.children}
+        backgroundColor: isSelected ? ColorPalette.lightGreen : 'transparent',
+      }}
+      onPress={() => {
+        if (props.selectable) {
+          setIsSelected(!isSelected)
+        }
+      }}
+      onPressIn={() => setIsSelected(true)}
+      onPressOut={() => setIsSelected(false)}
+      activeOpacity={1}>
       <Text style={props.testProp && { color: 'red' }}>{props.title}</Text>
-    </View>
+    </TouchableOpacity>
   )
 }
 
@@ -98,8 +107,6 @@ const MonthlyCalendar: React.FC<MonthlyCalendarProps> = (props) => {
     </TouchableOpacity>
   ))
 
-  // useEffect(() => {}, [{}])
-
   useEffect(() => {
     props.selectedMonth && setSelectedMonth(props.selectedMonth)
     const numberOfDaysInSelectedMonth = selectedMonth.daysInMonth()
@@ -110,7 +117,7 @@ const MonthlyCalendar: React.FC<MonthlyCalendarProps> = (props) => {
     for (let i = 0; i < selectedMonth1stDayOfWeek; i++) {
       setSelectedMonthDateView((prevState) => [
         ...prevState,
-        <MonthlyCalendarItem key={-i} itemWidth={props.width / 7} itemHeight={props.height / 7} />,
+        <MonthlyCalendarItem key={-i} itemWidth={props.width / 7} itemHeight={props.height / 7} selectable />,
       ])
     }
     for (let i = 1; i <= numberOfDaysInSelectedMonth; i++) {
@@ -123,6 +130,7 @@ const MonthlyCalendar: React.FC<MonthlyCalendarProps> = (props) => {
           itemWidth={props.width / 7}
           itemHeight={props.height / 6}
           itemValue={dateOfMonth}
+          selectable
         />,
       ])
     }
@@ -138,6 +146,7 @@ const MonthlyCalendar: React.FC<MonthlyCalendarProps> = (props) => {
           itemWidth={props.width / 7}
           itemHeight={props.height / 6}
           itemValue={selectedMonth.date(selectedMonth1stDayOfWeek)}
+          selectable
           testProp
         />,
         ...prevState.slice(selectedMonth1stDayOfWeek + 1 + (dateToHighlight - 1)),

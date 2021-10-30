@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Text, SafeAreaView, TextInput, ScrollView } from 'react-native'
 
-const NewTask = () => {
+const NewTaskScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardDismissMode="on-drag">
@@ -18,4 +18,4 @@ const NewTask = () => {
   )
 }
 
-export default NewTask
+export default NewTaskScreen
