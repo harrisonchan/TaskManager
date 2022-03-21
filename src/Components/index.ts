@@ -1,5 +1,8 @@
+export { Button } from './Button'
 export { GoalsCard } from './GoalsCard'
 export { HabitButton } from './HabitButton'
 export { Icon } from './Icon'
+export type { iconType } from './Icon'
+export { List, ListItem } from './List'
 export { TaskList } from './TaskList'
 export { TaskListItem } from './TaskListItem'

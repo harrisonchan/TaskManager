@@ -9,24 +9,14 @@ import { Calendar, MonthlyCalendar } from './Components/Calendar'
 import dayjs from 'dayjs'
 import { ColorPalette } from './Assets'
 import TabBar from './Components/TabBar'
-
-function SettingsScreen() {
-  const [selectedMonth, setSelectedMonth] = useState(dayjs('2021-03-10'))
-  return (
-    <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-        <Calendar calendarDimensions={350} />
-        <View style={{ height: 50, width: 50, backgroundColor: ColorPalette.darkGreen }} />
-      </View>
-    </SafeAreaView>
-  )
-}
+import { ProfileScreen } from './Screens/ProfileScreen'
 
 type RootParamList = {
   Home: undefined
   Testing: undefined
   NewTask: undefined
   Add: undefined
+  Profile: undefined
 }
 
 const Tab = createBottomTabNavigator<RootParamList>()
@@ -36,8 +26,8 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Tab.Navigator tabBar={(props) => <TabBar {...props} />}>
-          <Tab.Screen name="Home" component={HomeScreen} />
-          <Tab.Screen name="Testing" component={SettingsScreen} />
+          <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+          {/* <Tab.Screen name="Testing" component={SettingsScreen} /> */}
           <Tab.Screen
             name="NewTask"
             component={NewTaskScreen}
@@ -63,6 +53,7 @@ export default function App() {
             //   ),
             // }}
           />
+          <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>

@@ -1,17 +1,45 @@
 import React from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
-import { Styles } from '../Assets'
+import { moderateScale } from 'react-native-size-matters'
+import { ColorPalette, Styles } from '../Assets'
+import { TextStyles } from '../Assets/Styles'
+import { DEFAULT_WIDTH } from '../utilities/Constants'
+import { Icon, iconType } from './Icon'
+import { ProgressBar } from './ProgessBar'
 
-interface GoalsCardInterface {}
+interface GoalsCardInterface {
+  title: string
+  progress: number
+  maxProgress: number
+  icon?: iconType
+}
 
-export const GoalsCard: React.FC<GoalsCardInterface> = () => {
+export const GoalsCard: React.FC<GoalsCardInterface> = (props) => {
   return (
-    <TouchableOpacity style={[Styles.cardContainer, Styles.cardRadius, { backgroundColor: 'red' }]}>
-      <Text>Java Learning</Text>
-      <Text>20/40 Missions</Text>
-      <Text>50%</Text>
-      <View style={{ backgroundColor: 'gray', height: 10, width: 300 }}>
-        <View style={{ backgroundColor: 'green', height: 10, width: 150 }} />
+    <TouchableOpacity style={[Styles.cardContainer, { backgroundColor: ColorPalette.secondaryColor }]}>
+      <View style={{ flex: 1 }}>
+        <Text style={[TextStyles.subhead, TextStyles.white]}>{props.title}</Text>
+        <Text style={[TextStyles.body, TextStyles.transparentGray]}>20/40 Missions</Text>
+        <ProgressBar
+          progress={props.progress}
+          maxProgress={props.maxProgress}
+          width={DEFAULT_WIDTH * 0.6}
+          height={moderateScale(7)}
+          maxProgressOpacity={0.5}
+          showPercentage
+          percentagePosition="right"
+          percentageStyle={[TextStyles.subhead, TextStyles.white, { marginBottom: moderateScale(5) }]}
+        />
+      </View>
+      <View
+        style={{
+          marginTop: moderateScale(15),
+          alignItems: 'center',
+          justifyContent: 'center',
+          alignSelf: 'center',
+          overflow: 'hidden',
+        }}>
+        <Icon icon="illustration-sports" height={moderateScale(90)} width={moderateScale(90)} />
       </View>
     </TouchableOpacity>
   )
