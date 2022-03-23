@@ -46,6 +46,8 @@ const Styles = ScaledSheet.create({
     height: verticalScale(100),
     borderRadius: 10,
     padding: moderateScale(10),
+    paddingTop: moderateScale(20),
+    paddingBottom: moderateScale(20),
     flexDirection: 'row',
   },
   button: {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, TouchableOpacity } from 'react-native'
+import { Text, View, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
 import { moderateScale } from 'react-native-size-matters'
 import { ColorPalette } from '../Assets'
 import Styles, { TextStyles } from '../Assets/Styles'

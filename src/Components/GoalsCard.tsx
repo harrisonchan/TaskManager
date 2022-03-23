@@ -19,7 +19,7 @@ export const GoalsCard: React.FC<GoalsCardInterface> = (props) => {
     <TouchableOpacity style={[Styles.cardContainer, { backgroundColor: ColorPalette.secondaryColor }]}>
       <View style={{ flex: 1 }}>
         <Text style={[TextStyles.subhead, TextStyles.white]}>{props.title}</Text>
-        <Text style={[TextStyles.body, TextStyles.transparentGray]}>20/40 Missions</Text>
+        <Text style={[TextStyles.body, TextStyles.transparentGray, { flex: 1 }]}>20/40 Missions</Text>
         <ProgressBar
           progress={props.progress}
           maxProgress={props.maxProgress}

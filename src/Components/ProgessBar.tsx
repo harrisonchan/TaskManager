@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Text, TextStyle, View } from 'react-native'
+import { Text, TextStyle, View, ViewStyle } from 'react-native'
 import { moderateScale } from 'react-native-size-matters'
 import { ColorPalette } from '../Assets'
 import { DEFAULT_WIDTH } from '../utilities/Constants'
@@ -17,6 +17,7 @@ interface ProgressBarProps {
   percentagePosition?: 'left' | 'center' | 'right'
   // percentageStyle?: TextStyle[]
   percentageStyle?: TextStyle[] | any
+  containerStyle?: ViewStyle[] | ViewStyle
 }
 
 const defaultProps = {
@@ -35,7 +36,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = (props) => {
     setPercentage(Math.round((props.progress / props.maxProgress) * 100) / 100)
   }, [props])
   return (
-    <View style={props.width ? { width: props.width } : { width: DEFAULT_WIDTH }}>
+    <View style={[props.width ? { width: props.width } : { width: DEFAULT_WIDTH }, props.containerStyle]}>
       {props.showPercentage && (
         <Text
           style={[
