@@ -1,5 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
+import { ColorValue, View } from 'react-native'
 import {
   BookIcon,
   CheckboxIcon,
@@ -7,6 +7,7 @@ import {
   ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  PlusIcon,
   IllustrationSports,
 } from '../Assets'
 
@@ -17,13 +18,14 @@ export type iconType =
   | 'chevron-down'
   | 'chevron-left'
   | 'chevron-right'
+  | 'plus'
   | 'illustration-sports'
 
 interface IconProps {
   icon: iconType
   width: string | number
   height: string | number
-  fill?: string | number
+  fill?: ColorValue
 }
 
 const defaultProps: IconProps = {
@@ -44,6 +46,7 @@ export const Icon: React.FC<IconProps> = (props) => {
       {props.icon == 'chevron-right' && (
         <ChevronRightIcon width={props.width} height={props.height} fill={props.fill} />
       )}
+      {props.icon == 'plus' && <PlusIcon width={props.width} height={props.height} fill={props.fill} />}
       {props.icon == 'illustration-sports' && (
         <IllustrationSports width={props.width} height={props.height} fill={props.fill} />
       )}

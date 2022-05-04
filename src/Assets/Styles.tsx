@@ -6,7 +6,7 @@ import { DEFAULT_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH } from '../utilities/Constan
 export const ColorPalette = {
   black: '#0B2027',
   transparentGray: '#F3F3F3',
-  lightGray: '#CCCCCC',
+  lightGray: '#E8E8E8',
   darkGray: '#616161',
   steelGray: '#AAB6C7',
   primaryColor: '#9FB8AD', //Most dominant
@@ -28,6 +28,8 @@ const Styles = ScaledSheet.create({
   marginBottom20: { marginBottom: moderateScale(20) },
   marginLeft20: { marginLeft: moderateScale(20) },
   marginRight20: { marginRight: moderateScale(20) },
+  padding10: { padding: moderateScale(10) },
+  padding20: { padding: moderateScale(20) },
   container: {
     flex: 1,
     // justifyContent: 'center',

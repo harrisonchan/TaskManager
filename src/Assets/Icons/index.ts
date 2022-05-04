@@ -7,6 +7,7 @@ export { default as ChevronUpIcon } from './icon_chevron-up.svg'
 export { default as ChevronDownIcon } from './icon_chevron-down.svg'
 export { default as ChevronLeftIcon } from './icon_chevron-left.svg'
 export { default as ChevronRightIcon } from './icon_chevron-right.svg'
+export { default as PlusIcon } from './icon_plus.svg'
 // Clip art/Illustrations
 export { default as IllustrationSports } from './illustration_sports.svg'
 /**Categories

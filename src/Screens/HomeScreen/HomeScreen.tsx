@@ -4,7 +4,7 @@ import { View, ScrollView, Text, TouchableOpacity, Button, FlatList } from 'reac
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { moderateScale, verticalScale } from 'react-native-size-matters'
 import { Styles } from '../../Assets'
-import { TextStyles } from '../../Assets/Styles'
+import { TextStyles, ColorPalette } from '../../Assets/Styles'
 import { GoalsCard, HabitButton, Icon, TaskListItem } from '../../Components'
 import { ProgressBar } from '../../Components/ProgessBar'
 import { appActions } from '../../redux/features'
@@ -40,12 +40,46 @@ const HomeScreen = () => {
           </View>
           <FlatList
             horizontal
+            showsHorizontalScrollIndicator={false}
             // style={{ backgroundColor: 'red', height: moderateScale(10) }}
-            ListHeaderComponentStyle={Styles.marginLeft10}
-            ListHeaderComponent={<View></View>}
-            contentContainerStyle={{ height: verticalScale(60) }}
+            // ListHeaderComponentStyle={Styles.marginLeft10}
+            ListHeaderComponent={
+              <View>
+                <HabitButton
+                  title="New Habit"
+                  icon="plus"
+                  iconFill={ColorPalette.darkGray}
+                  buttonColor="#FFFFFF"
+                  containerStyle={[Styles.marginLeft10, Styles.marginRight10]}
+                />
+              </View>
+            }
+            contentContainerStyle={{ height: verticalScale(70) }}
             data={[{}]}
-            renderItem={() => <HabitButton title="Read books" />}
+            renderItem={() => (
+              <>
+                <HabitButton
+                  title="Read books"
+                  containerStyle={[Styles.marginLeft10, Styles.marginRight10]}
+                  progressValue={0.25}
+                />
+                <HabitButton
+                  title="Read books"
+                  containerStyle={[Styles.marginLeft10, Styles.marginRight10]}
+                  progressValue={0.5}
+                />
+                <HabitButton
+                  title="Read books"
+                  containerStyle={[Styles.marginLeft10, Styles.marginRight10]}
+                  progressValue={0.75}
+                />
+                <HabitButton
+                  title="Read books"
+                  containerStyle={[Styles.marginLeft10, Styles.marginRight10]}
+                  progressValue={1}
+                />
+              </>
+            )}
           />
         </View>
         <Text style={[TextStyles.title3]}>Today</Text>
