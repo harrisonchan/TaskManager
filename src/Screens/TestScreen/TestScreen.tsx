@@ -12,7 +12,7 @@ const TestScreen = () => {
     <View style={[Styles.screenContainer, { paddingTop: insets.top, justifyContent: 'center', alignItems: 'center' }]}>
       {/* <Calendar calendarDimensions={DEFAULT_WIDTH} /> */}
       {/* <CalendarFlatlistTest calendarDimensions={DEFAULT_WIDTH} /> */}
-      <Calendar calendarMode="monthly" dimensions={DEFAULT_WIDTH * 0.9} initialDate={dayjs()} />
+      <Calendar calendarMode="monthly" dimensions={DEFAULT_WIDTH} initialDate={dayjs()} />
     </View>
   )
 }

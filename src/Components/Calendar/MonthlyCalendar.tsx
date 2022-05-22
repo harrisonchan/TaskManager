@@ -47,7 +47,7 @@ interface WeekdaysHeaderProps {
 const WeekdaysHeader: React.FC<WeekdaysHeaderProps> = (props) => {
   const weekdays = Array.from(dayjs.weekdaysMin(), (weekday) => weekday[0])
   return (
-    <View style={{ width: props.dimensions, backgroundColor: 'orange' }}>
+    <View style={{ width: props.dimensions }}>
       <FlatList
         horizontal
         scrollEnabled={false}
@@ -95,7 +95,7 @@ const MonthlyView: React.FC<MonthlyViewProps> = (props) => {
     updateDaysOfMonth()
   }, [props.date])
   return (
-    <View style={{ width: props.dimensions, backgroundColor: 'yellow' }}>
+    <View style={{ width: props.dimensions }}>
       <FlatList
         numColumns={7}
         scrollEnabled={false}
@@ -120,26 +120,40 @@ interface MonthlyCalendarProps {
   dimensions: number
   date: dayjs.Dayjs
   onChangeDate?: (date: dayjs.Dayjs) => void
+  onDateSliderNext?: () => void
+  onDateSliderPrevious?: () => void
 }
 
 export const MonthlyCalendar: React.FC<MonthlyCalendarProps> = (props) => {
-  const MONTH_SIZE = 2
+  const MONTH_SIZE = 4
 
   const [months, setMonths] = useState<dayjs.Dayjs[]>([])
-  const [focusedMonth, setFocusedMonth] = useState<dayjs.Dayjs>(props.date)
   useEffect(() => {
-    let newMonthsArr: dayjs.Dayjs[] = [props.date]
+    createMonthsArray(props.date)
+  }, [])
+  function createMonthsArray(date: dayjs.Dayjs) {
+    let newMonthsArr: dayjs.Dayjs[] = [date]
     for (let i = 1; i <= MONTH_SIZE; i++) {
-      newMonthsArr.unshift(props.date.subtract(i, 'month'))
-      newMonthsArr.push(props.date.add(i, 'month'))
+      newMonthsArr.unshift(date.subtract(i, 'month'))
+      newMonthsArr.push(date.add(i, 'month'))
     }
     setMonths(newMonthsArr)
-    setFocusedMonth(months[MONTH_SIZE])
-  }, [])
-  useEffect(() => {}, [props.date])
+  }
+  useEffect(() => {
+    if (months.length > 0) {
+      const scrollIndex = MONTH_SIZE - months[MONTH_SIZE].diff(props.date, 'month')
+      // If scrolled too far, create new array
+      if (scrollIndex > months.length - 1) {
+        createMonthsArray(props.date)
+      } else {
+        MonthlyCalendarFlatListRef.current?.scrollToIndex({ index: scrollIndex, animated: true })
+        updateMonthsArr(scrollIndex)
+      }
+    }
+  }, [props.date])
   const MonthlyCalendarFlatListRef = useRef<FlatList>(null)
-  function updateMonthsArr(newScrollIndex: number) {
-    const difference = MONTH_SIZE - newScrollIndex
+  function updateMonthsArr(scrollIndex: number) {
+    const difference = MONTH_SIZE - scrollIndex
     let newMonthsArr: dayjs.Dayjs[] = months
     console.log('-------------\nbefore: ', newMonthsArr)
     if (difference > 0) {
@@ -156,10 +170,10 @@ export const MonthlyCalendar: React.FC<MonthlyCalendarProps> = (props) => {
       }
     }
     setMonths(newMonthsArr)
+    console.log(newMonthsArr[MONTH_SIZE])
     console.log('\nafter: ', newMonthsArr, '\n----------------')
     MonthlyCalendarFlatListRef.current?.scrollToIndex({ index: MONTH_SIZE, animated: false })
-    setFocusedMonth(newMonthsArr[MONTH_SIZE])
-    props.onChangeDate && props.onChangeDate(focusedMonth)
+    props.onChangeDate && props.onChangeDate(newMonthsArr[MONTH_SIZE])
     // console.log(focusedMonth)
   }
   return (
@@ -177,8 +191,8 @@ export const MonthlyCalendar: React.FC<MonthlyCalendarProps> = (props) => {
         snapToInterval={props.dimensions}
         onScrollEndDrag={(e) => {
           if (e.nativeEvent.targetContentOffset) {
-            const newScrollIndex = e.nativeEvent.targetContentOffset?.x / props.dimensions
-            updateMonthsArr(Math.round(newScrollIndex))
+            const scrollIndex = e.nativeEvent.targetContentOffset?.x / props.dimensions
+            updateMonthsArr(Math.round(scrollIndex))
           }
         }}
         data={months}

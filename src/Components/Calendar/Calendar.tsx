@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { Styles } from '../../Assets'
 import { MonthlyDateSlider } from './DateSlider'
@@ -13,6 +13,9 @@ interface CalendarProps {
 
 export const Calendar: React.FC<CalendarProps> = (props) => {
   const [date, setDate] = useState(props.initialDate)
+  useEffect(() => {
+    console.log('\n calendar date: ', date, '\n')
+  }, [date])
   return (
     <>
       {props.calendarMode == 'monthly' ? (
