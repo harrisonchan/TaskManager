@@ -29,7 +29,7 @@ export const Calendar: React.FC<CalendarProps> = (props) => {
             onPressNext={() => setDate(dayjs(date).add(1, 'month'))}
             onPressPrevious={() => setDate(dayjs(date).subtract(1, 'month'))}
           />
-          <MonthlyCalendar dimensions={props.dimensions} date={date} />
+          <MonthlyCalendar dimensions={props.dimensions} date={date} onChangeDate={(e) => setDate(e)} />
         </View>
       ) : (
         <></>

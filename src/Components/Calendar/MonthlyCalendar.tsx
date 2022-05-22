@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import localeData from 'dayjs/plugin/localeData'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { TouchableOpacity, View, Text, FlatList } from 'react-native'
 import { ColorPalette, TextStyles } from '../../Assets'
 import { Button } from '../Button'
@@ -119,23 +119,73 @@ const MonthlyView: React.FC<MonthlyViewProps> = (props) => {
 interface MonthlyCalendarProps {
   dimensions: number
   date: dayjs.Dayjs
+  onChangeDate?: (date: dayjs.Dayjs) => void
 }
 
 export const MonthlyCalendar: React.FC<MonthlyCalendarProps> = (props) => {
-  const [months, setMonths] = useState([])
+  const MONTH_SIZE = 2
+
+  const [months, setMonths] = useState<dayjs.Dayjs[]>([])
+  const [focusedMonth, setFocusedMonth] = useState<dayjs.Dayjs>(props.date)
   useEffect(() => {
-    let newMonthsArr = []
-    const startingMonth = 0
+    let newMonthsArr: dayjs.Dayjs[] = [props.date]
+    for (let i = 1; i <= MONTH_SIZE; i++) {
+      newMonthsArr.unshift(props.date.subtract(i, 'month'))
+      newMonthsArr.push(props.date.add(i, 'month'))
+    }
+    setMonths(newMonthsArr)
+    setFocusedMonth(months[MONTH_SIZE])
   }, [])
+  useEffect(() => {}, [props.date])
+  const MonthlyCalendarFlatListRef = useRef<FlatList>(null)
+  function updateMonthsArr(newScrollIndex: number) {
+    const difference = MONTH_SIZE - newScrollIndex
+    let newMonthsArr: dayjs.Dayjs[] = months
+    console.log('-------------\nbefore: ', newMonthsArr)
+    if (difference > 0) {
+      newMonthsArr = newMonthsArr.slice(0, -difference)
+      for (let i = 1; i <= Math.abs(difference); i++) {
+        newMonthsArr.unshift(months[0].subtract(i, 'month'))
+      }
+    }
+    // Checks for different < 0 and exclude difference == 0
+    else if (difference < 0) {
+      newMonthsArr = newMonthsArr.slice(Math.abs(difference), newMonthsArr.length)
+      for (let i = 1; i <= Math.abs(difference); i++) {
+        newMonthsArr.push(months[months.length - 1].add(i, 'month'))
+      }
+    }
+    setMonths(newMonthsArr)
+    console.log('\nafter: ', newMonthsArr, '\n----------------')
+    MonthlyCalendarFlatListRef.current?.scrollToIndex({ index: MONTH_SIZE, animated: false })
+    setFocusedMonth(newMonthsArr[MONTH_SIZE])
+    props.onChangeDate && props.onChangeDate(focusedMonth)
+    // console.log(focusedMonth)
+  }
   return (
     <View style={{ width: props.dimensions }}>
       <WeekdaysHeader dimensions={props.dimensions} />
-      {/* <FlatList
-        data={Array(24).fill(0)}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => <></>}
-      /> */}
-      <MonthlyView dimensions={props.dimensions} date={props.date} />
+      <FlatList
+        ref={MonthlyCalendarFlatListRef}
+        bounces={false}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        getItemLayout={(data, index) => ({ length: props.dimensions, offset: props.dimensions * index, index })}
+        initialScrollIndex={MONTH_SIZE}
+        decelerationRate="fast"
+        snapToAlignment="start"
+        snapToInterval={props.dimensions}
+        onScrollEndDrag={(e) => {
+          if (e.nativeEvent.targetContentOffset) {
+            const newScrollIndex = e.nativeEvent.targetContentOffset?.x / props.dimensions
+            updateMonthsArr(Math.round(newScrollIndex))
+          }
+        }}
+        data={months}
+        keyExtractor={(item) => item.format('DD-MM-YYYY')}
+        renderItem={({ item }) => <MonthlyView dimensions={props.dimensions} date={item} />}
+      />
+      {/* <Text>{focusedMonth}</Text> */}
     </View>
   )
 }
