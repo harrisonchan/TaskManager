@@ -37,24 +37,30 @@ export const HabitButton: React.FC<HabitButtonProps> = (props) => {
         setButtonColor(ColorPalette.tertiaryColor)
       }
     }
+    // // calculate border color based on progress
+    // if (props.progressValue) {
+
+    // }
   }, [])
   useEffect(() => {}, [{}])
   return (
     <View style={[{ alignItems: 'center', justifyContent: 'center' }, Styles.marginTop10, props.containerStyle]}>
       <TouchableOpacity
-        style={{
-          borderWidth: 2.5,
-          borderColor: ColorPalette.transparentGray,
-          borderRadius: 15,
-          height: moderateScale(60),
-          width: moderateScale(60),
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderLeftColor: props.progressValue && props.progressValue >= 0.25 && buttonColor,
-          borderBottomColor: props.progressValue && props.progressValue >= 0.5 && buttonColor,
-          borderRightColor: props.progressValue && props.progressValue >= 0.75 && buttonColor,
-          borderTopColor: props.progressValue && props.progressValue >= 0.9 && buttonColor,
-        }}>
+        style={[
+          {
+            borderWidth: 2.5,
+            borderColor: ColorPalette.transparentGray,
+            borderRadius: 15,
+            height: moderateScale(60),
+            width: moderateScale(60),
+            alignItems: 'center',
+            justifyContent: 'center',
+            // borderLeftColor: props.progressValue && props.progressValue >= 0.25 && buttonColor,
+            // borderBottomColor: props.progressValue && props.progressValue >= 0.5 && buttonColor,
+            // borderRightColor: props.progressValue && props.progressValue >= 0.75 && buttonColor,
+            // borderTopColor: props.progressValue && props.progressValue >= 0.9 && buttonColor,
+          },
+        ]}>
         <View
           style={{
             backgroundColor: buttonColor,

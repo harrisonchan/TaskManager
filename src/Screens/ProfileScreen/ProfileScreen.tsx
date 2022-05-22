@@ -1,6 +1,5 @@
 import React from 'react'
-import { Text, View, SafeAreaView } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Text, View, SafeAreaView, TouchableOpacity } from 'react-native'
 import { moderateScale } from 'react-native-size-matters'
 import { Styles } from '../../Assets'
 import { TextStyles, ColorPalette } from '../../Assets/Styles'

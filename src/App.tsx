@@ -1,19 +1,15 @@
-import React, { useState } from 'react'
-import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import React from 'react'
 import { Provider } from 'react-redux'
 import { NavigationContainer } from '@react-navigation/native'
-import { BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { AddScreen, HomeScreen, NewTaskScreen } from './Screens'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { AddScreen, HomeScreen, AddNewTaskScreen } from './Screens'
 import { store } from './redux'
-import { Calendar, MonthlyCalendar } from './Components/Calendar'
-import dayjs from 'dayjs'
-import { ColorPalette } from './Assets'
-import TabBar from './Components/TabBar'
 import { ProfileScreen } from './Screens/ProfileScreen'
+import { TestScreen } from './Screens/TestScreen'
 
 type RootParamList = {
   Home: undefined
-  Testing: undefined
+  Test: undefined
   NewTask: undefined
   Add: undefined
   Profile: undefined
@@ -25,12 +21,11 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Tab.Navigator tabBar={(props) => <TabBar {...props} />}>
+        <Tab.Navigator>
           <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-          {/* <Tab.Screen name="Testing" component={SettingsScreen} /> */}
           <Tab.Screen
             name="NewTask"
-            component={NewTaskScreen}
+            component={AddNewTaskScreen}
             options={{
               tabBarLabel: 'New Task',
             }}
@@ -54,6 +49,7 @@ export default function App() {
             // }}
           />
           <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+          <Tab.Screen name="Test" component={TestScreen} options={{ headerShown: false }} />
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>

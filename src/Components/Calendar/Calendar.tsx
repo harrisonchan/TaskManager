@@ -1,27 +1,39 @@
 import dayjs from 'dayjs'
 import React, { useState } from 'react'
-import { SCREEN_WIDTH } from '../../utilities/Constants'
-import MonthlyCalendar from './MonthlyCalendar'
-import { Text, Button, View } from 'react-native'
+import { View } from 'react-native'
+import { Styles } from '../../Assets'
+import { MonthlyDateSlider } from './DateSlider'
+import { MonthlyCalendar } from './MonthlyCalendar'
 
 interface CalendarProps {
-  calendarDimensions?: number
-  selectedMonth?: dayjs.Dayjs
+  calendarMode: 'weekly' | 'monthly'
+  dimensions: number
+  initialDate: dayjs.Dayjs
 }
 
-const Calendar: React.FC<CalendarProps> = (props) => {
-  const [dimensions, setDimensions] = useState(props.calendarDimensions ? props.calendarDimensions : SCREEN_WIDTH)
-  const [selectedMonth, setSelectedMonth] = useState(props.selectedMonth ? props.selectedMonth : dayjs())
+export const Calendar: React.FC<CalendarProps> = (props) => {
+  const [date, setDate] = useState(props.initialDate)
   return (
-    <View>
-      <MonthlyCalendar
-        selectedMonth={selectedMonth}
-        width={dimensions}
-        height={dimensions}
-        onChangeMonth={(selectedMonth) => setSelectedMonth(selectedMonth)}
-      />
-    </View>
+    <>
+      {props.calendarMode == 'monthly' ? (
+        <View
+          style={{
+            width: props.dimensions,
+            height: props.dimensions,
+            justifyContent: 'center',
+            backgroundColor: 'beige',
+          }}>
+          <MonthlyDateSlider
+            containerStyle={Styles.marginBottom5}
+            selectedMonth={date}
+            onPressNext={() => setDate(dayjs(date).add(1, 'month'))}
+            onPressPrevious={() => setDate(dayjs(date).subtract(1, 'month'))}
+          />
+          <MonthlyCalendar dimensions={props.dimensions} date={date} />
+        </View>
+      ) : (
+        <></>
+      )}
+    </>
   )
 }
-
-export default Calendar

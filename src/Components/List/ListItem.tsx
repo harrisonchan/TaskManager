@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import { moderateScale } from 'react-native-size-matters'
 import { ColorPalette } from '../../Assets'
-import { DEFAULT_WIDTH } from '../../utilities/Constants'
+import { DEFAULT_WIDTH } from '../../Assets/Styles'
 import { Icon, iconType } from '../Icon'
 
 interface ListItemProps {

@@ -2,7 +2,7 @@ import React from 'react'
 import { ColorValue, View } from 'react-native'
 import {
   BookIcon,
-  CheckboxIcon,
+  CheckIcon,
   ChevronUpIcon,
   ChevronDownIcon,
   ChevronLeftIcon,
@@ -13,7 +13,7 @@ import {
 
 export type iconType =
   | 'book'
-  | 'checkbox'
+  | 'check'
   | 'chevron-up'
   | 'chevron-down'
   | 'chevron-left'
@@ -26,6 +26,8 @@ interface IconProps {
   width: string | number
   height: string | number
   fill?: ColorValue
+  stroke?: ColorValue
+  strokeWidth?: number
 }
 
 const defaultProps: IconProps = {
@@ -38,17 +40,77 @@ const defaultProps: IconProps = {
 export const Icon: React.FC<IconProps> = (props) => {
   return (
     <>
-      {props.icon == 'book' && <BookIcon width={props.width} height={props.height} fill={props.fill} />}
-      {props.icon == 'checkbox' && <CheckboxIcon width={props.width} height={props.height} fill={props.fill} />}
-      {props.icon == 'chevron-up' && <ChevronUpIcon width={props.width} height={props.height} fill={props.fill} />}
-      {props.icon == 'chevron-down' && <ChevronDownIcon width={props.width} height={props.height} fill={props.fill} />}
-      {props.icon == 'chevron-left' && <ChevronLeftIcon width={props.width} height={props.height} fill={props.fill} />}
-      {props.icon == 'chevron-right' && (
-        <ChevronRightIcon width={props.width} height={props.height} fill={props.fill} />
+      {props.icon == 'book' && (
+        <BookIcon
+          width={props.width}
+          height={props.height}
+          fill={props.fill}
+          stroke={props.stroke}
+          strokeWidth={props.strokeWidth}
+        />
       )}
-      {props.icon == 'plus' && <PlusIcon width={props.width} height={props.height} fill={props.fill} />}
+      {props.icon == 'check' && (
+        <CheckIcon
+          width={props.width}
+          height={props.height}
+          fill={props.fill}
+          stroke={props.stroke}
+          strokeWidth={props.strokeWidth}
+        />
+      )}
+      {props.icon == 'chevron-up' && (
+        <ChevronUpIcon
+          width={props.width}
+          height={props.height}
+          fill={props.fill}
+          stroke={props.stroke}
+          strokeWidth={props.strokeWidth}
+        />
+      )}
+      {props.icon == 'chevron-down' && (
+        <ChevronDownIcon
+          width={props.width}
+          height={props.height}
+          fill={props.fill}
+          stroke={props.stroke}
+          strokeWidth={props.strokeWidth}
+        />
+      )}
+      {props.icon == 'chevron-left' && (
+        <ChevronLeftIcon
+          width={props.width}
+          height={props.height}
+          fill={props.fill}
+          stroke={props.stroke}
+          strokeWidth={props.strokeWidth}
+        />
+      )}
+      {props.icon == 'chevron-right' && (
+        <ChevronRightIcon
+          width={props.width}
+          height={props.height}
+          fill={props.fill}
+          stroke={props.stroke}
+          strokeWidth={props.strokeWidth}
+        />
+      )}
+      {props.icon == 'plus' && (
+        <PlusIcon
+          width={props.width}
+          height={props.height}
+          fill={props.fill}
+          stroke={props.stroke}
+          strokeWidth={props.strokeWidth}
+        />
+      )}
       {props.icon == 'illustration-sports' && (
-        <IllustrationSports width={props.width} height={props.height} fill={props.fill} />
+        <IllustrationSports
+          width={props.width}
+          height={props.height}
+          fill={props.fill}
+          stroke={props.stroke}
+          strokeWidth={props.strokeWidth}
+        />
       )}
     </>
   )

@@ -1,7 +1,17 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
+import { Dimensions } from 'react-native'
 import { moderateScale, ScaledSheet, verticalScale } from 'react-native-size-matters'
-import { DEFAULT_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH } from '../utilities/Constants'
+
+export const SCREEN_WIDTH = Dimensions.get('screen').width
+export const SCREEN_HEIGHT = Dimensions.get('screen').height
+export const DEFAULT_WIDTH = Dimensions.get('screen').width * 0.9
+
+export const ICON_DIMENSIONS = {
+  SMALL: moderateScale(20),
+  MEDIUM: moderateScale(45),
+  LARGE: moderateScale(60),
+}
 
 export const ColorPalette = {
   black: '#0B2027',
@@ -20,6 +30,10 @@ export const ColorPalette = {
 }
 
 const Styles = ScaledSheet.create({
+  marginTop5: { marginTop: moderateScale(5) },
+  marginBottom5: { marginBottom: moderateScale(5) },
+  marginLeft5: { marginLeft: moderateScale(5) },
+  marginRight5: { marginRight: moderateScale(5) },
   marginTop10: { marginTop: moderateScale(10) },
   marginBottom10: { marginBottom: moderateScale(10) },
   marginLeft10: { marginLeft: moderateScale(10) },
@@ -28,12 +42,18 @@ const Styles = ScaledSheet.create({
   marginBottom20: { marginBottom: moderateScale(20) },
   marginLeft20: { marginLeft: moderateScale(20) },
   marginRight20: { marginRight: moderateScale(20) },
+  padding5: { padding: moderateScale(5) },
   padding10: { padding: moderateScale(10) },
   padding20: { padding: moderateScale(20) },
+  flexRow: { flexDirection: 'row' },
+  centerContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   container: {
     flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   screenContainer: {
     flex: 1,

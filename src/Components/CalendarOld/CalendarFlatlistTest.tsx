@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
 import React, { useEffect, useRef, useState } from 'react'
 import MonthlyCalendar from './MonthlyCalendar'
-import { SCREEN_WIDTH } from '../../utilities/Constants'
 import { FlatList, RefreshControlBase, Text, View } from 'react-native'
+import { SCREEN_WIDTH } from '../../Assets'
 
 interface CalendarProps {
   calendarDimensions?: number
