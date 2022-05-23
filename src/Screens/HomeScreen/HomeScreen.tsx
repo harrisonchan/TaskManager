@@ -4,7 +4,7 @@ import { View, ScrollView, Text, TouchableOpacity, Button, FlatList } from 'reac
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { moderateScale, verticalScale } from 'react-native-size-matters'
 import { Styles } from '../../Assets'
-import { TextStyles, ColorPalette, DEFAULT_WIDTH } from '../../Assets/Styles'
+import { TextStyles, ColorPalette, COMPONENT_WIDTH1 } from '../../Assets/Styles'
 import { GoalsCard, HabitButton, Icon, TaskList, TaskListItem } from '../../Components'
 import { ProgressBar } from '../../Components/ProgessBar'
 import { appActions } from '../../redux/features'
@@ -38,7 +38,7 @@ const HomeScreen = () => {
               </View>
               <GoalsCard progress={5} maxProgress={30} title="Gym daily" />
             </View>
-            <View style={{ flexDirection: 'row', width: DEFAULT_WIDTH }}>
+            <View style={{ flexDirection: 'row', width: COMPONENT_WIDTH1 }}>
               <Text style={[TextStyles.title3, { flex: 1 }]}>My Habits</Text>
               <TouchableOpacity>
                 <Text style={TextStyles.body}>1/3</Text>

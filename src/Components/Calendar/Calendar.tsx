@@ -1,38 +1,45 @@
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
-import { View } from 'react-native'
-import { Styles } from '../../Assets'
-import { MonthlyDateSlider } from './DateSlider'
+import { RegisteredStyle, View, ViewStyle } from 'react-native'
 import { MonthlyCalendar } from './MonthlyCalendar'
 
 interface CalendarProps {
   calendarMode: 'weekly' | 'monthly'
   dimensions: number
   initialDate: dayjs.Dayjs
+  onChangeDate: (date: dayjs.Dayjs) => void
+  style?: ViewStyle | ViewStyle[] | RegisteredStyle<ViewStyle> | RegisteredStyle<ViewStyle>[]
+  monthlyCalendarDimensions?: number
+  monthlyCalendarDateSelectionViewMonthStyle?: ViewStyle | RegisteredStyle<ViewStyle>
+  monthlyCalendarNumMonthstoRender?: number
 }
 
 export const Calendar: React.FC<CalendarProps> = (props) => {
   const [date, setDate] = useState(props.initialDate)
   useEffect(() => {
-    console.log('\n calendar date: ', date, '\n')
+    props.onChangeDate(date)
   }, [date])
   return (
     <>
       {props.calendarMode == 'monthly' ? (
         <View
-          style={{
-            width: props.dimensions,
-            height: props.dimensions,
-            justifyContent: 'center',
-            backgroundColor: 'beige',
-          }}>
-          <MonthlyDateSlider
-            containerStyle={Styles.marginBottom5}
-            selectedMonth={date}
-            onPressNext={() => setDate(dayjs(date).add(1, 'month'))}
-            onPressPrevious={() => setDate(dayjs(date).subtract(1, 'month'))}
+          style={[
+            {
+              width: props.dimensions,
+              height: props.dimensions,
+              justifyContent: 'center',
+              alignItems: 'center',
+            },
+            props.style,
+          ]}>
+          <MonthlyCalendar
+            showDateSlider
+            dimensions={props.monthlyCalendarDimensions ? props.monthlyCalendarDimensions : props.dimensions * 0.9}
+            date={date}
+            onChangeDate={(e) => setDate(e)}
+            dateSelectionViewMonthStyle={props.monthlyCalendarDateSelectionViewMonthStyle}
+            numMonthsToRender={props.monthlyCalendarNumMonthstoRender ? props.monthlyCalendarNumMonthstoRender : 1}
           />
-          <MonthlyCalendar dimensions={props.dimensions} date={date} onChangeDate={(e) => setDate(e)} />
         </View>
       ) : (
         <></>

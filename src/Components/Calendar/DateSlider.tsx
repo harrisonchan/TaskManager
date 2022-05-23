@@ -4,31 +4,48 @@ import { TouchableOpacity, View, ViewStyle, Text, RegisteredStyle } from 'react-
 import { TextStyles } from '../../Assets'
 
 interface MonthlyDateSliderProps {
-  selectedMonth?: dayjs.Dayjs
-  onPressPrevious?: () => void
-  onPressNext?: () => void
+  selectedDate: dayjs.Dayjs
+  onPressPreviousMonth?: () => void
+  onPressNextMonth?: () => void
+  onPressPreviousYear?: () => void
+  onPressNextYear?: () => void
   onPressDate?: () => void
-  isSelectingMonth?: boolean
+  onChangeDate?: (date: dayjs.Dayjs) => void
+  isSelectingMonth: boolean
   containerStyle?: ViewStyle | ViewStyle[] | RegisteredStyle<ViewStyle> | RegisteredStyle<ViewStyle>[]
 }
 
 export const MonthlyDateSlider: React.FC<MonthlyDateSliderProps> = (props) => {
-  const [selectedMonth, setSelectedMonth] = useState(dayjs())
+  const [selectedDate, setSelectedDate] = useState(props.selectedDate)
   useEffect(() => {
-    props.selectedMonth && setSelectedMonth(props.selectedMonth)
-  }, [selectedMonth, props.selectedMonth])
+    props.selectedDate && setSelectedDate(props.selectedDate)
+  }, [selectedDate, props.selectedDate])
   return (
     <View
       style={[{ flexDirection: 'row', justifyContent: 'space-between' }, props.containerStyle && props.containerStyle]}>
-      <TouchableOpacity onPress={props.onPressPrevious}>
+      <TouchableOpacity
+        onPress={() => {
+          props.isSelectingMonth
+            ? props.onPressPreviousYear && props.onPressPreviousYear()
+            : props.onPressPreviousMonth && props.onPressPreviousMonth()
+        }}>
         <Text style={TextStyles.subhead}>Previous</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={props.onPressDate}>
+      <TouchableOpacity
+        onPress={() => {
+          // setIsSelectingMonth(!isSelectingMonth)
+          props.onPressDate && props.onPressDate()
+        }}>
         <Text style={TextStyles.subhead}>
-          {props.isSelectingMonth ? selectedMonth.format('YYYY') : selectedMonth.format('MMMM YYYY')}
+          {props.isSelectingMonth ? selectedDate.format('YYYY') : selectedDate.format('MMMM YYYY')}
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={props.onPressNext}>
+      <TouchableOpacity
+        onPress={() => {
+          props.isSelectingMonth
+            ? props.onPressNextYear && props.onPressNextYear()
+            : props.onPressNextMonth && props.onPressNextMonth()
+        }}>
         <Text style={TextStyles.subhead}>Next</Text>
       </TouchableOpacity>
     </View>

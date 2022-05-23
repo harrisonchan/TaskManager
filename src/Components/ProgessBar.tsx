@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Text, TextStyle, View, ViewStyle } from 'react-native'
 import { moderateScale } from 'react-native-size-matters'
-import { ColorPalette } from '../Assets'
-import { DEFAULT_WIDTH } from '../utilities/Constants'
+import { ColorPalette, COMPONENT_WIDTH1 } from '../Assets'
 
 interface ProgressBarProps {
   progress: number
@@ -36,7 +35,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = (props) => {
     setPercentage(Math.round((props.progress / props.maxProgress) * 100) / 100)
   }, [props])
   return (
-    <View style={[props.width ? { width: props.width } : { width: DEFAULT_WIDTH }, props.containerStyle]}>
+    <View style={[props.width ? { width: props.width } : { width: COMPONENT_WIDTH1 }, props.containerStyle]}>
       {props.showPercentage && (
         <Text
           style={[
@@ -54,7 +53,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = (props) => {
         <View
           style={[
             props.maxProgressOpacity ? { opacity: props.maxProgressOpacity } : { opacity: 0.5 },
-            // props.width ? { width: props.width } : { width: DEFAULT_WIDTH },
+            // props.width ? { width: props.width } : { width: COMPONENT_WIDTH1 },
             { width: '100%' },
             props.height ? { height: props.height } : { height: moderateScale(10) },
             props.rounded && { borderRadius: 10 },
@@ -67,7 +66,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = (props) => {
           style={[
             props.width
               ? { width: props.width * (props.progress / props.maxProgress) }
-              : { width: DEFAULT_WIDTH * (props.progress / props.maxProgress) }, //This code fucking sucks
+              : { width: COMPONENT_WIDTH1 * (props.progress / props.maxProgress) }, //This code fucking sucks
             props.height ? { height: props.height } : { height: moderateScale(10) },
             props.rounded &&
               (props.progress == props.maxProgress

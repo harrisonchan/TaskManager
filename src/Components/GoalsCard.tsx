@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { moderateScale } from 'react-native-size-matters'
 import { ColorPalette, Styles } from '../Assets'
-import { DEFAULT_WIDTH, TextStyles } from '../Assets/Styles'
+import { COMPONENT_WIDTH1, TextStyles } from '../Assets/Styles'
 import { Icon, iconType } from './Icon'
 import { ProgressBar } from './ProgessBar'
 
@@ -22,7 +22,7 @@ export const GoalsCard: React.FC<GoalsCardInterface> = (props) => {
         <ProgressBar
           progress={props.progress}
           maxProgress={props.maxProgress}
-          width={DEFAULT_WIDTH * 0.6}
+          width={COMPONENT_WIDTH1 * 0.6}
           height={moderateScale(7)}
           maxProgressOpacity={0.5}
           showPercentage

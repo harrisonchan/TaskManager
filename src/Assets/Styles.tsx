@@ -5,7 +5,8 @@ import { moderateScale, ScaledSheet, verticalScale } from 'react-native-size-mat
 
 export const SCREEN_WIDTH = Dimensions.get('screen').width
 export const SCREEN_HEIGHT = Dimensions.get('screen').height
-export const DEFAULT_WIDTH = Dimensions.get('screen').width * 0.9
+export const COMPONENT_WIDTH1 = Dimensions.get('screen').width * 0.9
+export const COMPONENT_WIDTH2 = Dimensions.get('screen').width * 0.8
 
 export const ICON_DIMENSIONS = {
   SMALL: moderateScale(20),
@@ -64,7 +65,7 @@ const Styles = ScaledSheet.create({
     // marginBottom: verticalScale(8),
     // marginLeft: verticalScale(8),
     // marginRight: verticalScale(8),
-    width: DEFAULT_WIDTH,
+    width: COMPONENT_WIDTH1,
     height: verticalScale(100),
     borderRadius: 10,
     padding: moderateScale(10),
@@ -83,7 +84,7 @@ const Styles = ScaledSheet.create({
     // alignSelf: 'center',
   },
   wideButton: {
-    width: DEFAULT_WIDTH,
+    width: COMPONENT_WIDTH1,
     height: SCREEN_HEIGHT * 0.06,
     borderRadius: 10,
   },
