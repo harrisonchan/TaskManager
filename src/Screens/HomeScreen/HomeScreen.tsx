@@ -110,8 +110,8 @@ const HomeScreen = () => {
               onPress={() => {
                 dispatch(
                   appActions.taskActions.addTask({
-                    taskTitle: 'task title bitch',
-                    taskDescription: 'task description bitch',
+                    taskTitle: 'task title',
+                    taskDescription: 'task description',
                     taskDueDates: utilityFunctions.dayjsUtilities.dayjsArrayToString([dayjs(), dayjs()]),
                     taskCompletionDate: undefined,
                     taskReminderDates: [],
@@ -126,8 +126,8 @@ const HomeScreen = () => {
               onPress={() => {
                 dispatch(
                   appActions.taskActions.addTask({
-                    taskTitle: 'task title bitch',
-                    taskDescription: 'task description bitch',
+                    taskTitle: 'task title',
+                    taskDescription: 'task description',
                     taskDueDates: utilityFunctions.dayjsUtilities.dayjsArrayToString([dayjs(), dayjs()]),
                     taskCompletionDate: undefined,
                     taskReminderDates: [],

@@ -44,7 +44,7 @@ interface WeekdaysHeaderProps {
   dimensions: number
 }
 
-const WeekdaysHeader: React.FC<WeekdaysHeaderProps> = (props) => {
+const WeekdaysHeader = memo((props: WeekdaysHeaderProps) => {
   const weekdays = Array.from(dayjs.weekdaysMin(), (weekday) => weekday[0])
   return (
     <View style={{ width: props.dimensions }}>
@@ -60,7 +60,7 @@ const WeekdaysHeader: React.FC<WeekdaysHeaderProps> = (props) => {
       />
     </View>
   )
-}
+})
 
 interface MonthlyViewProps {
   dimensions: number
@@ -247,6 +247,7 @@ export const MonthlyCalendar: React.FC<MonthlyCalendarProps> = (props) => {
     }
     setMonths(newMonthsArr)
     MonthlyCalendarFlatListRef.current?.scrollToIndex({ index: props.numMonthsToRender, animated: false })
+    props.onChangeDate && props.onChangeDate(newMonthsArr[props.numMonthsToRender])
   }
   useEffect(() => {
     months.length > 0 && props.onChangeDate && props.onChangeDate(months[props.numMonthsToRender])
@@ -298,29 +299,31 @@ export const MonthlyCalendar: React.FC<MonthlyCalendarProps> = (props) => {
         //   calendarInitialScrollIndex={props.numMonthsToRender}
         //   calendarUpdateMonthsFunction={updateMonthsArr}
         // />
-        <>
-          <WeekdaysHeader dimensions={props.dimensions} />
-          <FlatList
-            ref={MonthlyCalendarFlatListRef}
-            bounces={false}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            getItemLayout={(data, index) => ({ length: props.dimensions, offset: props.dimensions * index, index })}
-            initialScrollIndex={props.numMonthsToRender}
-            decelerationRate="fast"
-            snapToAlignment="start"
-            snapToInterval={props.dimensions}
-            onScrollEndDrag={(e) => {
-              if (e.nativeEvent.targetContentOffset) {
-                const scrollIndex = e.nativeEvent.targetContentOffset?.x / props.dimensions
-                updateMonthsArr(Math.round(scrollIndex))
-              }
-            }}
-            data={months}
-            keyExtractor={(item) => item.format('DD-MM-YYYY')}
-            renderItem={({ item }) => <MonthlyView dimensions={props.dimensions} date={item} />}
-          />
-        </>
+        <FlatList
+          ref={MonthlyCalendarFlatListRef}
+          bounces={false}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          getItemLayout={(data, index) => ({ length: props.dimensions, offset: props.dimensions * index, index })}
+          initialScrollIndex={props.numMonthsToRender}
+          decelerationRate="fast"
+          snapToAlignment="start"
+          snapToInterval={props.dimensions}
+          onScrollEndDrag={(e) => {
+            if (e.nativeEvent.targetContentOffset) {
+              const scrollIndex = e.nativeEvent.targetContentOffset?.x / props.dimensions
+              updateMonthsArr(Math.round(scrollIndex))
+            }
+          }}
+          data={months}
+          keyExtractor={(item) => item.format('DD-MM-YYYY')}
+          renderItem={({ item }) => (
+            <>
+              <WeekdaysHeader dimensions={props.dimensions} />
+              <MonthlyView dimensions={props.dimensions} date={item} />
+            </>
+          )}
+        />
       )}
     </View>
   )
